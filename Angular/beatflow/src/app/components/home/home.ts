@@ -58,12 +58,35 @@ export class Home implements OnInit {
     this.loadPlaylists();
   }
 
-  loadSongs() {
-    this.api.getAllSongs().subscribe({
-      next: (data: Song[]) => this.songs = data,
-      error: (err) => console.error("Error fetching songs:", err)
-    });
+  // Add this new variable at the top of your class
+filteredSongs: Song[] = [];
+searchTerm: string = '';
+
+// Update your loadSongs method to initialize both lists
+loadSongs() {
+  this.api.getAllSongs().subscribe({
+    next: (data: Song[]) => {
+      this.songs = data;
+      this.filteredSongs = data; // Initially, filtered list is the full list
+    },
+    error: (err) => console.error("Error fetching songs:", err)
+  });
+}
+
+// Add this function to handle the search logic
+onSearch() {
+  const term = this.searchTerm.toLowerCase().trim();
+  if (!term) {
+    this.filteredSongs = this.songs;
+    return;
   }
+
+  this.filteredSongs = this.songs.filter(song =>
+    song.title.toLowerCase().includes(term) ||
+    song.artist.toLowerCase().includes(term) ||
+    song.genre.toLowerCase().includes(term)
+  );
+}
 
   loadPlaylists() {
     this.api.getPlaylistsByUser(this.currentUserId).subscribe({

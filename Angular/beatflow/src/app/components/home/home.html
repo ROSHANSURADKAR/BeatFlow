@@ -19,7 +19,11 @@
   <main class="content">
     <header class="top-bar">
       <div class="search-container">
-        <input type="text" placeholder="Search for tracks, artists...">
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          (input)="onSearch()"
+          placeholder="Search for tracks, artists, or genre...">
       </div>
       <button class="add-song-toggle" (click)="toggleSongForm()">
         {{ showAddSongForm ? '✕ Close' : '＋ Add New Song' }}
@@ -44,8 +48,14 @@
     <div class="view-container" *ngIf="!showAddSongForm">
 
       <section class="song-section" *ngIf="activeView === 'home'">
-        <h3>New Releases</h3>
-        <app-song-list [songs]="songs" (play)="play($event)" (add)="addToPlaylist($event)" (like)="toggleLike($event)"></app-song-list>
+        <h3>{{ searchTerm ? 'Search Results' : 'New Releases' }}</h3>
+        <app-song-list
+          [songs]="filteredSongs"
+          (play)="play($event)"
+          (add)="addToPlaylist($event)"
+          (like)="toggleLike($event)">
+        </app-song-list>
+        <p *ngIf="filteredSongs.length === 0" class="no-results">No songs found for "{{searchTerm}}"</p>
       </section>
 
       <div *ngIf="activeView === 'profile'" class="profile-card-view">

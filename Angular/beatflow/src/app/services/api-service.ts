@@ -8,7 +8,7 @@ import { User } from '../models/user';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
-  private baseUrl = 'http://localhost:8081/api';
+  private baseUrl = 'http://localhost:8080/api';
 
   constructor(private http: HttpClient) {}
 
@@ -57,6 +57,15 @@ addSong(songData: Song): Observable<Song> {
 // Get playlists for a specific user
 getPlaylistsByUser(userId: number): Observable<Playlist[]> {
   return this.http.get<Playlist[]>(`${this.baseUrl}/playlists/user/${userId}`);
+}
+// Send OTP to the provided email
+sendOtp(email: string) {
+  return this.http.post(`${this.baseUrl}/auth/send-otp`, { email });
+}
+
+// Final registration call
+verifyAndRegister(user: any, otp: string) {
+  return this.http.post(`${this.baseUrl}/auth/register`, { ...user, otp });
 }
 
 }

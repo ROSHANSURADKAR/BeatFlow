@@ -1,14 +1,57 @@
-<p>register works!</p>
 <div class="auth-container">
   <div class="auth-box">
     <h2 class="logo">beatflow</h2>
-    <h3>Create Account</h3>
-    <form (ngSubmit)="onRegister()">
-      <input type="text" name="name" [(ngModel)]="user.name" placeholder="Full Name" required>
-      <input type="email" name="email" [(ngModel)]="user.email" placeholder="Email" required>
-      <input type="password" name="password" [(ngModel)]="user.password" placeholder="Password" required>
-      <button type="submit" class="auth-btn">Sign Up</button>
+
+    <form *ngIf="!otpSent" (ngSubmit)="requestOtp()" #regForm="ngForm">
+      <h3>Create Account</h3>
+
+      <div class="input-group">
+        <input type="text" name="name" [(ngModel)]="user.name" placeholder="Full Name"
+               required pattern="^[a-zA-Z\s]*$" #name="ngModel">
+        <small class="error-text" *ngIf="name.invalid && name.touched">Alphabets only, please.</small>
+      </div>
+
+      <div class="input-group">
+        <input type="email" name="email" [(ngModel)]="user.email" placeholder="Email"
+               required email #email="ngModel">
+        <small class="error-text" *ngIf="email.invalid && email.touched">Enter a valid email address.</small>
+      </div>
+
+      <div class="input-group">
+        <input type="password" name="password" [(ngModel)]="user.password"
+               placeholder="Password (ABC@123)" required
+               pattern="^[a-zA-Z]{3}[@#$!%*?&][0-9]+$" #pass="ngModel">
+        <small class="error-text" *ngIf="pass.invalid && pass.touched">Use format: 3 Letters + Symbol + Numbers</small>
+      </div>
+
+      <div class="input-group">
+        <input type="password" name="cpass" [(ngModel)]="confirmPassword"
+               placeholder="Confirm Password" required #cpass="ngModel">
+        <small class="error-text" *ngIf="confirmPassword !== user.password && cpass.touched">Passwords do not match!</small>
+      </div>
+
+      <button type="submit" class="auth-btn"
+              [disabled]="regForm.invalid || user.password !== confirmPassword">
+        Next: Send OTP
+      </button>
     </form>
-    <p>Already have an account? <a routerLink="/login">Login</a></p>
+
+    <div *ngIf="otpSent" class="otp-view">
+      <h3>Verify Your Email</h3>
+      <p>We sent a 6-digit code to <strong>{{user.email}}</strong></p>
+
+      <input type="text" [(ngModel)]="userOtp" placeholder="000000"
+             maxlength="6" class="otp-input">
+
+      <button class="auth-btn" (click)="onRegister()" [disabled]="userOtp.length < 6">
+        Verify & Create Account
+      </button>
+
+      <button class="back-link" (click)="otpSent = false">Edit Details</button>
+    </div>
+
+    <div class="auth-footer">
+      <p>Already have an account? <a routerLink="/login">Login</a></p>
+    </div>
   </div>
 </div>

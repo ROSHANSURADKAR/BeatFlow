@@ -106,3 +106,25 @@ input:focus {
 .auth-footer a:hover {
   text-decoration: underline;
 }
+/* Styling for validation text */
+.validation-error {
+  color: #ff4b5c; /* Neon Red/Pink */
+  font-size: 0.75rem;
+  text-align: left;
+  margin-top: 5px;
+  padding-left: 10px;
+}
+
+/* Red border for invalid inputs when touched */
+input.invalid {
+  border: 1px solid #ff4b5c !important;
+  box-shadow: 0 0 5px rgba(255, 75, 92, 0.2);
+}
+
+/* Auth button disabled state */
+.auth-btn:disabled {
+  background: #444;
+  cursor: not-allowed;
+  opacity: 0.6;
+  box-shadow: none;
+}

@@ -13,7 +13,15 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+    private OtpService otpService;
 
+    public user registerWithOtp(user u, String otp) {
+        if (otpService.validateOtp(u.getEmail(), otp)) {
+            return userRepository.save(u); // Saved to MySQL
+        } else {
+            throw new RuntimeException("Invalid OTP Code");
+        }
+    }
     // ✅ Register new user
     public user registerUser(user u) {
         u.setId(null); // ✅ Force insert, not update

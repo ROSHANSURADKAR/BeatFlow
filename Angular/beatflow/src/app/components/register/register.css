@@ -47,7 +47,7 @@ input {
   border-radius: 8px;
   color: #ffffff;
   font-size: 0.95rem;
-  box-sizing: border-box; /* Ensures padding doesn't break width */
+  box-sizing: border-box;
   transition: border-color 0.3s ease;
 }
 
@@ -91,7 +91,7 @@ p {
   font-size: 0.9rem;
 }
 
-/* Login Link */
+
 a {
   color: #3ec1d5;
   text-decoration: none;
@@ -107,4 +107,76 @@ a:hover {
 /* Remove default "register works!" text appearance if desired */
 p:first-of-type {
     display: none; /* Hides the "register works!" text if you don't want it */
+}
+.input-group {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.error-text {
+  color: #ff4b5c; /* Neon Red */
+  font-size: 0.7rem;
+  display: block;
+  margin-top: 5px;
+  text-align: left;
+}
+
+input.is-invalid {
+  border: 1px solid #ff4b5c !important;
+  background: rgba(255, 75, 92, 0.05);
+}
+
+.auth-btn:disabled {
+  filter: grayscale(1);
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: radial-gradient(circle, #1a0a33, #0d0221);
+}
+
+.auth-box {
+  background: rgba(255, 255, 255, 0.05);
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+  padding: 40px;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.otp-input {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid #00f5ff;
+  color: #00f5ff;
+  font-size: 2.5rem;
+  text-align: center;
+  letter-spacing: 10px;
+  width: 100%;
+  margin: 30px 0;
+  outline: none;
+}
+
+.error-text {
+  color: #ff4b5c;
+  font-size: 0.75rem;
+  display: block;
+  text-align: left;
+  margin-top: 5px;
+}
+
+.back-link {
+  background: none;
+  border: none;
+  color: #b3b3b3;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-top: 15px;
 }

@@ -1,15 +1,20 @@
-<p>song-list works!</p>
-<div class="grid">
-      <div class="card" *ngFor="let s of songs">
-        <div class="img-container">
-          <img [src]="s.coverUrl" (click)="play.emit(s)">
-          <div class="overlay" (click)="play.emit(s)">▶</div>
-        </div>
-        <h5>{{s.title}}</h5>
-        <p>{{s.artist}}</p>
-        <div class="actions">
-          <button (click)="add.emit(s.songid)">➕</button>
-          <button (click)="like.emit(s.songid)">❤</button>
-        </div>
+<div class="song-grid">
+  <div class="card" *ngFor="let s of songs">
+    <div class="img-container">
+      <img [src]="s.coverUrl" alt="cover" (click)="play.emit(s)">
+      <div class="overlay" (click)="play.emit(s)">
+        <span class="play-icon">▶</span>
       </div>
     </div>
+
+    <div class="song-info">
+      <h5>{{s.title}}</h5>
+      <p>{{s.artist}}</p>
+    </div>
+
+    <div class="actions">
+      <button class="action-btn" (click)="add.emit(s.songid)" title="Add to Playlist">➕</button>
+      <button class="action-btn" (click)="like.emit(s.songid)" title="Like Song">❤</button>
+    </div>
+  </div>
+</div>

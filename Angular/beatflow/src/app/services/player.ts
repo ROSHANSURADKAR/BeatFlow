@@ -2,38 +2,44 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Song } from '../models/song';
 
-
 @Injectable({ providedIn: 'root' })
 export class PlayerService {
-  private audio = new Audio();
+  private audio = new Audio(); // The actual browser audio object
 
-  currentSong$ = new BehaviorSubject<Song | null>(null);
-  isPlaying$ = new BehaviorSubject<boolean>(false);
+  private currentSongSubject = new BehaviorSubject<Song | null>(null);
+  currentSong$ = this.currentSongSubject.asObservable();
 
-  constructor() {
-    this.audio.onended = () => this.isPlaying$.next(false);
-  }
+  private isPlayingSubject = new BehaviorSubject<boolean>(false);
+  isPlaying$ = this.isPlayingSubject.asObservable();
 
   playSong(song: Song) {
-    if (this.currentSong$.value?.songid !== song.songid) {
-      this.audio.src = song.fileUrl;
-
-  this.audio.load();
-  this.audio.play();
-      this.currentSong$.next(song);
+    if (!song.fileUrl) {
+      console.error("This song has no audio URL!");
+      return;
     }
-    this.audio.play();
-    this.isPlaying$.next(true);
-  }
 
-  pauseSong() {
+    // Stop current song if one is playing
     this.audio.pause();
-    this.isPlaying$.next(false);
+
+    // Set the new source
+    this.audio.src = song.fileUrl;
+    this.audio.load(); // Load the file
+
+    this.audio.play()
+      .then(() => {
+        this.currentSongSubject.next(song);
+        this.isPlayingSubject.next(true);
+      })
+      .catch(err => console.error("Playback failed:", err));
   }
 
   togglePlay() {
-    if (this.isPlaying$.value) this.pauseSong();
-    else if (this.currentSong$.value) this.audio.play();
+    if (this.audio.paused) {
+      this.audio.play();
+      this.isPlayingSubject.next(true);
+    } else {
+      this.audio.pause();
+      this.isPlayingSubject.next(false);
+    }
   }
-
 }

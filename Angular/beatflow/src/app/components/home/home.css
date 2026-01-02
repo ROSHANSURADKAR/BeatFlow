@@ -1,16 +1,18 @@
-/* Layout & Background */
+
 .saavn-container {
   display: flex;
   height: 100vh;
-  background: radial-gradient(circle at top right, #1a0a33, #0d0221);
+  background: radial-gradient(circle at top right, #cbd816, #0d0221);
   color: white;
   overflow: hidden;
 }
 
-/* Glowing Sidebar */
+
 .sidebar {
   width: 85px;
   background: rgba(0, 0, 0, 0.6);
+
+  -webkit-backdrop-filter: blur(15px);
   backdrop-filter: blur(15px);
   display: flex;
   flex-direction: column;
@@ -61,6 +63,7 @@
 /* Neomorphic Forms */
 .glass-form {
   background: rgba(255, 255, 255, 0.03);
+  -webkit-backdrop-filter: blur(20px); /* Add this line */
   backdrop-filter: blur(20px);
   padding: 30px;
   border-radius: 20px;
@@ -71,7 +74,8 @@
 .profile-card-view { display: flex; justify-content: center; align-items: center; min-height: 70vh; }
 .glass-card {
   position: relative;
-  background: rgba(255, 255, 255, 0.02);
+background: rgba(255, 255, 255, 0.02);
+  -webkit-backdrop-filter: blur(30px); /* Add this line */
   backdrop-filter: blur(30px);
   border: 1px solid rgba(122, 0, 255, 0.2);
   padding: 50px;
@@ -106,7 +110,124 @@
 /* Player Bar */
 .player-bar {
   position: fixed; bottom: 0; left: 0; width: 100%; height: 90px;
-  background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(20px);
+ background: rgba(0, 0, 0, 0.8);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
   display: flex; justify-content: space-between; align-items: center; padding: 0 30px;
   border-top: 1px solid rgba(122, 0, 255, 0.2);
+}
+.no-results {
+  text-align: center;
+  margin-top: 50px;
+  color: #b3b3b3;
+  font-style: italic;
+}
+/* Container for the upload form */
+.add-song-section {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+  animation: fadeInDown 0.5s ease;
+}
+
+.glass-form {
+ background: rgba(255, 255, 255, 0.03);
+  -webkit-backdrop-filter: blur(20px); /* Add this line */
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(224, 27, 27, 0.1);
+  padding: 40px;
+  border-radius: 30px;
+  width: 100%;
+  max-width: 700px;
+}
+
+.glass-form h3 {
+  color: #00f5ff;
+  margin-bottom: 25px;
+  font-size: 1.8rem;
+  text-shadow: 0 0 10px rgba(0, 245, 255, 0.5);
+}
+
+/* Grid for the inputs */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 columns */
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.form-grid input {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  border-radius: 12px;
+  color: white;
+  font-size: 1rem;
+  transition: 0.3s;
+}
+
+.form-grid input:focus {
+  outline: none;
+  border-color: #00f5ff;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 15px rgba(0, 245, 255, 0.2);
+}
+
+/* Submit Button */
+.submit-song {
+  background: linear-gradient(90deg, #00f5ff, #e90e20); /* Cyan to Purple gradient */
+  color: white;
+  border: none;
+  padding: 15px 40px;
+  border-radius: 50px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: 0.3s;
+  width: 100%;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.submit-song:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(122, 0, 255, 0.4);
+}
+.song-section {
+  padding-top: 20px;
+}
+
+.song-section h3 {
+  font-size: 1.8rem;
+  margin-bottom: 30px;
+  color: #ffffff;
+  border-left: 5px solid #f30930; /* Purple accent stripe */
+  padding-left: 15px;
+}
+
+/* No results text */
+.no-results {
+  text-align: center;
+  padding: 60px;
+  color: #b3b3b3;
+  font-size: 1.2rem;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 20px;
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  margin-top: 20px;
+}
+
+/* Animations */
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.view-container {
+  animation: fadeIn 0.6s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

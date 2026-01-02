@@ -23,10 +23,11 @@ export class Login{
       console.log("Login Success:", user);
       localStorage.setItem('currentUser', JSON.stringify(user));
       this.router.navigate(['/home']);
-    },
-    error: (err) => {
-      console.error("Login Error Details:", err);
-      this.errorMessage = 'Login failed. Please check your credentials.';
     }
   });
-}}
+}
+
+onInputChange() {
+  this.errorMessage = '';
+}
+}

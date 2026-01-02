@@ -1,4 +1,4 @@
-<p>login works!</p>
+
 <div class="auth-container">
   <div class="auth-box">
     <h2 class="logo">beatflow</h2>
@@ -7,6 +7,7 @@
     <h3>Login to your account</h3>
 
     <form (ngSubmit)="onLogin()" #loginForm="ngForm">
+
       <div class="input-field">
         <input
           type="email"
@@ -14,7 +15,14 @@
           [(ngModel)]="loginData.email"
           placeholder="Email Address"
           required
-          #email="ngModel">
+          email
+          #email="ngModel"
+          [class.invalid]="email.invalid && email.touched">
+
+        <div class="validation-error" *ngIf="email.invalid && email.touched">
+          <small *ngIf="email.errors?.['required']">Email is required.</small>
+          <small *ngIf="email.errors?.['email']">Please enter a valid email address.</small>
+        </div>
       </div>
 
       <div class="input-field">
@@ -23,7 +31,15 @@
           name="password"
           [(ngModel)]="loginData.password"
           placeholder="Password"
-          required>
+          required
+          minlength="6"
+          #password="ngModel"
+          [class.invalid]="password.invalid && password.touched">
+
+        <div class="validation-error" *ngIf="password.invalid && password.touched">
+          <small *ngIf="password.errors?.['required']">Password is required.</small>
+          <small *ngIf="password.errors?.['minlength']">Password must be at least 6 characters.</small>
+        </div>
       </div>
 
       <div class="error-msg" *ngIf="errorMessage">
